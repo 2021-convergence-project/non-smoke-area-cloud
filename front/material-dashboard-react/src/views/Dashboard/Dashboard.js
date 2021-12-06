@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react'
 // react plugin for creating charts
@@ -33,18 +33,50 @@ import moment from 'moment';
 
 const useStyles = makeStyles(styles);
 
+
+
 const Dashboard = observer(() => {
   const classes = useStyles();
 
+  // 지도
+  const options = {
+    //지도를 생성할 때 필요한 기본 옵션
+    center: new window.kakao.maps.LatLng(37.50970376505139, 127.05552179779437), //지도의 중심좌표.
+    level: 4, //지도의 레벨(확대, 축소 정도)
+  };
+  const container = useRef(null); //지도를 담을 영역의 DOM 레퍼런스
+
   useEffect(() => {
+    dashboardStore.selectMode();
     dashboardStore.selectBoardAll();
   }, []);
-  // console.log(toJS(dashboardStore).boards[0]);
+
+  useEffect(() => {
+    // 지도
+    var map = new window.kakao.maps.Map(container.current, options);
+
+    var positions = [];
+    for (var j = 0; j < toJS(dashboardStore).splitResult.length; j++){
+      if (j>10) break;
+      positions.push({latlng : new window.kakao.maps.LatLng(toJS(dashboardStore).splitResult[j].latitude, toJS(dashboardStore).splitResult[j].longitude)})
+    }
+    console.log(positions);
+
+    for (var k = 0; k < positions.length; k++) {
+      // 마커를 생성합니다
+      var marker = new window.kakao.maps.Marker({
+        map: map,
+        position: positions[k].latlng, // 마커를 표시할 위치
+      });
+    }
+
+    return () => { marker };
+  })
 
   const columns = [
-    { field: 'time', headerName: '시간', width: 300 },
-    { field: 'latitude', headerName: '위도', width: 100 },
-    { field: 'longitude', headerName: '경도', width: 100 },
+    { field: 'time', headerName: '시간', width: 200 },
+    { field: 'latitude', headerName: '위도', width: 150 },
+    { field: 'longitude', headerName: '경도', width: 150 },
   ]
 
   const allCount = [];
@@ -53,7 +85,6 @@ const Dashboard = observer(() => {
       { id: board.id, time: moment(board.time).format('YY-MM-DD, h:mm:ss A '), latitude: board.latitude, longitude: board.longitude }
     );
   });
-  // console.log(allCount);
 
   const ftCount = [];
   toJS(dashboardStore).boards.forEach((board) => {
@@ -63,7 +94,6 @@ const Dashboard = observer(() => {
       );
     }
   });
-  // console.log(ftCount);
 
   const todayCount = [];
   toJS(dashboardStore).boards.forEach((board) => {
@@ -73,7 +103,6 @@ const Dashboard = observer(() => {
       );
     }
   });
-  // console.log(todayCount);
 
   const sevendaysCount = [];
   toJS(dashboardStore).boards.forEach((board) => {
@@ -83,7 +112,6 @@ const Dashboard = observer(() => {
       );
     }
   });
-  // console.log(sevendaysCount);
 
   const thirtydaysCount = [];
   toJS(dashboardStore).boards.forEach((board) => {
@@ -93,7 +121,6 @@ const Dashboard = observer(() => {
       );
     }
   });
-  // console.log(thirtydaysCount);
 
   const meh = [];
   const cwh = [];
@@ -108,68 +135,70 @@ const Dashboard = observer(() => {
   const dgh = [];
   const ph = [];
   const twelve = [];
+
   toJS(dashboardStore).boards.forEach((board) => {
-    if ((moment(board.time).format("HH") >= "23") || (moment(board.time).format("HH") < "01") ) {
+    if ((moment(board.time).format("HH") >= "23") || (moment(board.time).format("HH") < "01")) {
       meh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if((moment(board.time).format("HH") <= "01" ) || (moment(board.time).format("HH") < "03" )){
+    else if ((moment(board.time).format("HH") <= "01") || (moment(board.time).format("HH") < "03")) {
       cwh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if((moment(board.time).format("HH") <= "03" ) || (moment(board.time).format("HH") < "05" )){
+    else if ((moment(board.time).format("HH") <= "03") || (moment(board.time).format("HH") < "05")) {
       th.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if((moment(board.time).format("HH") <= "05" ) || (moment(board.time).format("HH") < "07" )){
+    else if ((moment(board.time).format("HH") <= "05") || (moment(board.time).format("HH") < "07")) {
       rh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if((moment(board.time).format("HH") <= "07" ) || (moment(board.time).format("HH") < "09" )){
+    else if ((moment(board.time).format("HH") <= "07") || (moment(board.time).format("HH") < "09")) {
       dnh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if((moment(board.time).format("HH") <= "09" ) || (moment(board.time).format("HH") < "11" )){
+    else if ((moment(board.time).format("HH") <= "09") || (moment(board.time).format("HH") < "11")) {
       seh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if((moment(board.time).format("HH") <= "11" ) || (moment(board.time).format("HH") < "13" )){
+    else if ((moment(board.time).format("HH") <= "11") || (moment(board.time).format("HH") < "13")) {
       hh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if((moment(board.time).format("HH") <= "13" ) || (moment(board.time).format("HH") < "15" )){
+    else if ((moment(board.time).format("HH") <= "13") || (moment(board.time).format("HH") < "15")) {
       sph.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if((moment(board.time).format("HH") <= "15" ) || (moment(board.time).format("HH") < "17" )){
+    else if ((moment(board.time).format("HH") <= "15") || (moment(board.time).format("HH") < "17")) {
       myh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if((moment(board.time).format("HH") <= "17" ) || (moment(board.time).format("HH") < "19" )){
+    else if ((moment(board.time).format("HH") <= "17") || (moment(board.time).format("HH") < "19")) {
       cnh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if((moment(board.time).format("HH") <= "19" ) || (moment(board.time).format("HH") < "21" )){
+    else if ((moment(board.time).format("HH") <= "19") || (moment(board.time).format("HH") < "21")) {
       dgh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else{
+    else {
       ph.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
   });
+
   twelve.push(meh.length);
   twelve.push(cwh.length);
   twelve.push(th.length);
@@ -183,7 +212,7 @@ const Dashboard = observer(() => {
   twelve.push(dgh.length);
   twelve.push(ph.length);
 
-  let timeData =  {
+  let timeData = {
     labels: ["1am", "3am", "5am", "7am", "9am", "11am", "13pm", "15pm", "17pm", "19pm", "21pm", "23pm"],
     series: [twelve],
   }
@@ -241,15 +270,18 @@ const Dashboard = observer(() => {
   week.push(fri.length);
   week.push(sat.length);
   week.push(sun.length);
-  
+
   let weekData = {
     labels: ["월", "화", "수", "목", "금", "토", "일"],
     series: [week],
   }
 
-
   return (
     <div>
+      
+    <h4 style={{ textAlign:"left", color:"red" }}><b>상위 적발 지역 10곳</b></h4>
+      <div style={{ height: "50vh" }} ref={container}></div>
+
       <GridContainer>
         <GridItem xs={12} sm={12} md={4}>
           <Card>
@@ -311,8 +343,8 @@ const Dashboard = observer(() => {
               />
             </CardHeader>
             <CardBody>
-              <h4 className={classes.cardTitle}>1:00시</h4>
-              <p className={classes.cardCategory}>가장 많이 적발된 시간대</p>
+              <h4 className={classes.cardTitle}>시간 대 별 적발 건수</h4>
+              <p className={classes.cardCategory}>2시간 간격으로 적발 건수 집계</p>
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
@@ -333,8 +365,8 @@ const Dashboard = observer(() => {
               />
             </CardHeader>
             <CardBody>
-              <h4 className={classes.cardTitle}>11월</h4>
-              <p className={classes.cardCategory}>가장 많이 적달된 요일</p>
+              <h4 className={classes.cardTitle}>요일 별 적발 건수</h4>
+              <p className={classes.cardCategory}>자정을 기준으로 일일 적발 건수 집계</p>
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
@@ -345,7 +377,7 @@ const Dashboard = observer(() => {
       </GridContainer>
 
       <GridContainer>
-      <GridItem xs={12} sm={6} md={6}>
+        <GridItem xs={12} sm={6} md={6}>
           <Card>
             <Accordion>
               <AccordionSummary
@@ -374,7 +406,7 @@ const Dashboard = observer(() => {
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={6}>
-        <Card plain>
+          <Card plain>
             <Accordion>
               <AccordionSummary
                 expandIcon={<Code />}

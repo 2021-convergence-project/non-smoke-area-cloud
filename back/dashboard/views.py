@@ -8,7 +8,6 @@ from dashboard.serializers import DashboardSerializer
 def dashboard(request):
     board = Dashboard.objects.all()
     serializer = DashboardSerializer(board, many=True)
-    print(serializer)
     return Response(serializer.data)
 
 # test
