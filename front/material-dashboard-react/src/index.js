@@ -24,13 +24,11 @@ import Admin from "layouts/Admin.js";
 // import RTL from "layouts/RTL.js";
 
 import "assets/css/material-dashboard-react.css?v=1.10.0";
-import Dashboard from "views/Dashboard/Dashboard";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path="/" component={Admin} />
-      <Route path="/dashboard" component={Dashboard} />
 
       {/* <Route path="/admin" component={Admin} /> */}
       {/* <Route path="/rtl" component={RTL} /> */}

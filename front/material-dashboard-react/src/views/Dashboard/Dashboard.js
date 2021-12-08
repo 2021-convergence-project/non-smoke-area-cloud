@@ -29,7 +29,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import { DataGrid } from '@mui/x-data-grid';
-import moment from 'moment';
+import moment from 'moment-timezone'
 
 const useStyles = makeStyles(styles);
 
@@ -82,42 +82,42 @@ const Dashboard = observer(() => {
   const allCount = [];
   toJS(dashboardStore).boards.forEach((board) => {
     allCount.push(
-      { id: board.id, time: moment(board.time).format('YY-MM-DD, h:mm:ss A '), latitude: board.latitude, longitude: board.longitude }
+      { id: board.id, time: moment(board.time).tz('Europe/London').format('YY-MM-DD, h:mm:ss A '), latitude: board.latitude, longitude: board.longitude }
     );
   });
 
   const ftCount = [];
   toJS(dashboardStore).boards.forEach((board) => {
-    if (moment().subtract(1, 'days') < moment(board.time)) {
+    if (moment().tz('Europe/London').subtract(1, 'days') < moment(board.time).tz('Europe/London')) {
       ftCount.push(
-        { id: board.id, time: moment(board.time).format('LTS'), latitude: board.latitude, longitude: board.longitude }
+        { id: board.id, time: moment(board.time).tz('Europe/London').format('LTS'), latitude: board.latitude, longitude: board.longitude }
       );
     }
   });
 
   const todayCount = [];
   toJS(dashboardStore).boards.forEach((board) => {
-    if (moment().format("YY.MM.DD") === moment(board.time).format("YY.MM.DD")) {
+    if (moment().tz('Europe/London').format("YY.MM.DD") === moment(board.time).tz('Europe/London').format("YY.MM.DD")) {
       todayCount.push(
-        { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
+        { id: board.id, time: moment(board.time).tz('Europe/London').format(), latitude: board.latitude, longitude: board.longitude }
       );
     }
   });
 
   const sevendaysCount = [];
   toJS(dashboardStore).boards.forEach((board) => {
-    if (moment().subtract(7, 'day').format("YY.MM.DD") < moment(board.time).format("YY.MM.DD")) {
+    if (moment().tz('Europe/London').subtract(7, 'day').format("YY.MM.DD") < moment(board.time).tz('Europe/London').format("YY.MM.DD")) {
       sevendaysCount.push(
-        { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
+        { id: board.id, time: moment(board.time).tz('Europe/London').tz('Europe/London').format(), latitude: board.latitude, longitude: board.longitude }
       );
     }
   });
 
   const thirtydaysCount = [];
   toJS(dashboardStore).boards.forEach((board) => {
-    if (moment().subtract(30, 'day').format("YY.MM.DD") < moment(board.time).format("YY.MM.DD")) {
+    if (moment().tz('Europe/London').subtract(30, 'day').format("YY.MM.DD") < moment(board.time).tz('Europe/London').format("YY.MM.DD")) {
       thirtydaysCount.push(
-        { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
+        { id: board.id, time: moment(board.time).tz('Europe/London').tz('Europe/London').format(), latitude: board.latitude, longitude: board.longitude }
       );
     }
   });
@@ -136,58 +136,58 @@ const Dashboard = observer(() => {
   const ph = [];
   const twelve = [];
 
-  toJS(dashboardStore).boards.forEach((board) => {
-    if ((moment(board.time).format("HH") >= "23") || (moment(board.time).format("HH") < "01")) {
+  toJS(dashboardStore).boards.forEach((board) => {  
+    if ((moment(board.time).tz('Europe/London').format("HH") >= "23") || (moment(board.time).tz('Europe/London').format("HH") < "01")) {
       meh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if ((moment(board.time).format("HH") <= "01") || (moment(board.time).format("HH") < "03")) {
+    else if ((moment(board.time).tz('Europe/London').format("HH") <= "01") || (moment(board.time).tz('Europe/London').format("HH") < "03")) {
       cwh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if ((moment(board.time).format("HH") <= "03") || (moment(board.time).format("HH") < "05")) {
+    else if ((moment(board.time).tz('Europe/London').format("HH") <= "03") || (moment(board.time).tz('Europe/London').format("HH") < "05")) {
       th.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if ((moment(board.time).format("HH") <= "05") || (moment(board.time).format("HH") < "07")) {
+    else if ((moment(board.time).tz('Europe/London').format("HH") <= "05") || (moment(board.time).tz('Europe/London').format("HH") < "07")) {
       rh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if ((moment(board.time).format("HH") <= "07") || (moment(board.time).format("HH") < "09")) {
+    else if ((moment(board.time).tz('Europe/London').format("HH") <= "07") || (moment(board.time).tz('Europe/London').format("HH") < "09")) {
       dnh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if ((moment(board.time).format("HH") <= "09") || (moment(board.time).format("HH") < "11")) {
+    else if ((moment(board.time).tz('Europe/London').format("HH") <= "09") || (moment(board.time).tz('Europe/London').format("HH") < "11")) {
       seh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if ((moment(board.time).format("HH") <= "11") || (moment(board.time).format("HH") < "13")) {
+    else if ((moment(board.time).tz('Europe/London').format("HH") <= "11") || (moment(board.time).tz('Europe/London').format("HH") < "13")) {
       hh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if ((moment(board.time).format("HH") <= "13") || (moment(board.time).format("HH") < "15")) {
+    else if ((moment(board.time).tz('Europe/London').format("HH") <= "13") || (moment(board.time).tz('Europe/London').format("HH") < "15")) {
       sph.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if ((moment(board.time).format("HH") <= "15") || (moment(board.time).format("HH") < "17")) {
+    else if ((moment(board.time).tz('Europe/London').format("HH") <= "15") || (moment(board.time).tz('Europe/London').format("HH") < "17")) {
       myh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if ((moment(board.time).format("HH") <= "17") || (moment(board.time).format("HH") < "19")) {
+    else if ((moment(board.time).tz('Europe/London').format("HH") <= "17") || (moment(board.time).tz('Europe/London').format("HH") < "19")) {
       cnh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if ((moment(board.time).format("HH") <= "19") || (moment(board.time).format("HH") < "21")) {
+    else if ((moment(board.time).tz('Europe/London').format("HH") <= "19") || (moment(board.time).tz('Europe/London').format("HH") < "21")) {
       dgh.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
@@ -227,32 +227,32 @@ const Dashboard = observer(() => {
   const sun = [];
   const week = [];
   toJS(dashboardStore).boards.forEach((board) => {
-    if (moment(board.time).format("ddd") === "Mon") {
+    if (moment(board.time).tz('Europe/London').format("ddd") === "Mon") {
       mon.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if (moment(board.time).format("ddd") === "Tue") {
+    else if (moment(board.time).tz('Europe/London').format("ddd") === "Tue") {
       tue.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if (moment(board.time).format("ddd") === "Wed") {
+    else if (moment(board.time).tz('Europe/London').format("ddd") === "Wed") {
       wed.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if (moment(board.time).format("ddd") === "Thu") {
+    else if (moment(board.time).tz('Europe/London').format("ddd") === "Thu") {
       thu.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if (moment(board.time).format("ddd") === "Fri") {
+    else if (moment(board.time).tz('Europe/London').format("ddd") === "Fri") {
       fri.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );
     }
-    else if (moment(board.time).format("ddd") === "Sat") {
+    else if (moment(board.time).tz('Europe/London').format("ddd") === "Sat") {
       sat.push(
         { id: board.id, time: board.time, latitude: board.latitude, longitude: board.longitude }
       );

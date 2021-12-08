@@ -21,7 +21,7 @@ const dailySalesChart = {
       tension: 0,
     }),
     low: 0,
-    high: 4, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    high: 40, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
     chartPadding: {
       top: 0,
       right: 0,
@@ -136,7 +136,7 @@ const completedTasksChart = {
       tension: 0,
     }),
     low: 0,
-    high: 8, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    high: 40, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
     chartPadding: {
       top: 0,
       right: 0,
