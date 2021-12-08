@@ -60,7 +60,7 @@ const Dashboard = observer(() => {
       if (j>10) break;
       positions.push({latlng : new window.kakao.maps.LatLng(toJS(dashboardStore).splitResult[j].latitude, toJS(dashboardStore).splitResult[j].longitude)})
     }
-    console.log(positions);
+    // console.log(positions);
 
     for (var k = 0; k < positions.length; k++) {
       // 마커를 생성합니다
