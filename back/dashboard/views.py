@@ -11,9 +11,9 @@ def dashboard(request):
     return Response(serializer.data)
 
 # test
-@api_view(['POST'])
-def dashboard_create(request):
-    serializer = DashboardSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-    return Response(serializer.data)
+# @api_view(['POST'])
+# def dashboard_create(request):
+#     serializer = DashboardSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#     return Response(serializer.data)

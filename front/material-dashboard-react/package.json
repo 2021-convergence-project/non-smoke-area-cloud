@@ -3,7 +3,7 @@
   "version": "1.10.0",
   "description": "Material Dashboard React. Coded by Creative Tim",
   "private": false,
-  "proxy": "http://localhost:8000",
+  "proxy": "http://13.211.187.6:8000",
   "main": "dist/index.js",
   "dependencies": {
     "@emotion/react": "^11.7.0",
@@ -50,7 +50,7 @@
   "bugs": {
     "url": "https://github.com/creativetimofficial/material-dashboard-react/issues"
   },
-  "homepage": "https://creativetimofficial.github.io/material-dashboard-react/#/dashboard",
+  "homepage": ".",
   "optionalDependencies": {
     "@babel/core": "7.14.0",
     "typescript": "4.2.4"

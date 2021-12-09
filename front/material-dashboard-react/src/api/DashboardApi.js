@@ -1,6 +1,6 @@
 import axios from 'axios';
 class DashboardApi{
-  URL = '/dashboard/';
+  URL = '/api/';
 
   dashboardList(){
     return axios.get(this.URL).then((response)=>response.data).catch((error)=>console.log(error));
